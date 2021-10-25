@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "worker-safety-management",
+    "slug": "worker-safety-management",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "worker-safety-management"
+}
