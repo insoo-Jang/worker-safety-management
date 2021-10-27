@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -35,6 +39,23 @@
 			</dict>
 		</dict>
 	</dict>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>User need permission to use Bluetooth to communicate with the sensor</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>User need permission to use and browse peripherals to communicate with the sensor.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>It is necessary for the user to recognize the QR code with the camera and provide the app's server information</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string></string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Need microphone access for using videos</string>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+        <string>bluetooth-central</string>
+        <string>bluetooth-peripheral</string>
+        <string>processing</string>
+    </array>
 	<key>UILaunchStoryboardName</key>
 	<string>SplashScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

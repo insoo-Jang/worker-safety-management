@@ -19,7 +19,15 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-
+//TODO ios 빌드할때 주석풀기
+// android {
+//     lintOptions {
+//         checkReleaseBuilds false
+//         // Or, if you prefer, you can continue to check for errors in release builds,
+//         // but continue the build even when errors are found:
+//         abortOnError false
+//     }
+// }
 allprojects {
     repositories {
         mavenLocal()
@@ -31,7 +39,10 @@ allprojects {
             // Android JSC is installed from npm
             url(new File(["node", "--print", "require.resolve('jsc-android/package.json')"].execute().text.trim(), "../dist"))
         }
-
+        maven {
+                // expo-camera bundles a custom com.google.android:cameraview
+                url "$rootDir/../node_modules/expo-camera/android/maven"
+            }
         google()
         mavenCentral()
         jcenter()
