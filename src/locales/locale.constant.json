@@ -14,8 +14,10 @@
         "disconnect-success" : "Disconnected",
         "connection-fail" : "Connection failed",
         "disabled" : "disconnected",
-        "bluetooth-off" : "please turn on bluetooth",
-        "bluetooth-reset" : "\n1) Check the sensor power status.\n2) Try turning Bluetooth off and on or rebooting the app."
+        "bluetooth-reset" : "\n1) Check the sensor power status.\n2) Try turning Bluetooth off and on or rebooting the app.",
+        "view-more" : "More",
+        "view-fold" : "Fold",
+        "logout" : "Logout"
     },
     "common": {
         "all": "All",
@@ -47,7 +49,6 @@
         "permission-deny-camera": "Camera access is denied and cannot be used.",
         "invalid-qr": "Invalid QR Code",
         "server" : "Internal Server Error",
-        "name-date" : "Please enter your name and date of birth.",
         "device": "Can not be ues if running in a simulator or emulator.",
         "firmware-version": "Unable to get firmware version information.",
         "sensor-error-404": "No Notify value in sensor properties.",
@@ -58,14 +59,25 @@
         "qr": "QR Code Scan",
         "main": "Worker safety management",
         "description" :"Communication with Hanging-scaffolding sensor...",
-        "barometer" :"Barometer"
+        "barometer" :"Barometer",
+        "sensor": "Sensor",
+        "more": "More",
+        "sensor-list": "Sensor List",
+        "app-version": "App Version",
+        "my-info": "My Info",
+        "name" : "Name",
+        "phone" : "PhoneNumber",
+        "date-of-birth" : "Date of birth"
     },
     "login": {
         "header": "Worker Input",
         "name:":"Name is required",
-        "date-of-birth":"Date-of-birth is required(YY/MM/DD)",
         "phone-number":"Phone-number is required",
         "manager-mode": "Manager Mode",
         "next": "Next"
+    },
+    "alarm": {
+        "bluetooth-off": "Bluetooth is OFF.",
+        "no-sensor": "No sensor connected."
     }
 }

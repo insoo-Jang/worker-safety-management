@@ -1,8 +1,10 @@
 import { i18nt } from '../utils/i18n'
 
 export const SCREEN = {
-    MainTap: 'MainTap',
-    LoginTap: 'LoginTap',
+    MainTab: i18nt('title.sensor'),
+    LoginTab: 'LoginTab',
+    MoreTab: i18nt('title.more'),
     QR: i18nt('title.qr'),
     Main: i18nt('title.main'),
+    MyInfoTab: i18nt('title.my-info'),
 }

@@ -5,14 +5,11 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
 } from 'react-native'
-import { SMainTapContainerView } from './TapStyle'
+import { SCopyrightText } from './TabStyle'
 import { colorSet } from '../../styles/colors'
-import { responsiveHeight } from 'react-native-responsive-dimensions'
-import { Main } from '../pages/main'
-import { SCopyrightText } from './LoginTapStyle'
 import { Login } from '../pages/login'
 
-const LoginTap = () => {
+const LoginTab = () => {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <ScrollView style={{ backgroundColor: colorSet.white }}>
@@ -25,4 +22,4 @@ const LoginTap = () => {
     )
 }
 
-export default LoginTap
+export default LoginTab

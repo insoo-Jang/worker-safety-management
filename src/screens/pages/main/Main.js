@@ -1,177 +1,55 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
-import {
-    Alert,
-    NativeEventEmitter,
-    NativeModules,
-    Keyboard,
-    TouchableWithoutFeedback,
-    Platform,
-    View,
-    Text,
-} from 'react-native'
-import { Button, Input } from 'react-native-elements'
-import BleManager from 'react-native-ble-manager'
-import { useNavigation } from '@react-navigation/native'
-import { useDispatch, useSelector } from 'react-redux'
-import { debounce, isEmpty } from 'lodash-es'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { fontSizeSet } from '../../../styles/size'
-import { colorSet } from '../../../styles/colors'
-// import { Camera } from 'expo-camera'
+import { NativeModules, ScrollView } from 'react-native'
+import { SButtongroupContainerView } from '../../../components/ButtonGroupStyle'
+import ButtonGroup from '../../../components/ButtonGroup'
 import { i18nt } from '../../../utils/i18n'
-import {
-    SButtonGroupView,
-    SConnectStateContainerView,
-    SConnectStateText,
-    SContractStateContainerView,
-    SContractStateView,
-    SInfoContainerView,
-    SInfoDetailView,
-    STextLabel,
-} from './MainStyle'
-import Spinner from 'react-native-loading-spinner-overlay'
-import { fastenedMessage, typeOfFastened } from '../../../utils/common'
-// import { SCREEN } from '../../../navigation/constants'
-// import { clearUuid } from '../../../redux/reducers'
-// import { Audio } from 'expo-av'
+import StateBar from '../../../components/StateBar'
+import NativeEventEmitter from 'react-native/Libraries/EventEmitter/NativeEventEmitter'
+import { SSensorListContainerView } from './MainStyle'
+import SensorList from './SensorList'
+import DividerComponent from '../../../components/DividerComponent'
+import { Divider } from 'react-native-elements'
+
+const BleManagerModule = NativeModules.BleManager
+const bleManagerEmitter = new NativeEventEmitter(BleManagerModule)
 
 const Main = (props) => {
-    const [fastened, setFastened] = useState('-')
+    const [bluetoothState, setBluetoothState] = useState(null)
 
-    const [errorMessage, setErrorMessage] = useState('')
-    const [connectionState, setConnectionState] = useState(false)
+    const buttonGroupList = [
+        { title: i18nt('action.connection'), icon: 'access-point' },
+        { title: i18nt('action.disconnect'), icon: 'cancel' },
+    ]
 
+    const sensorList = [
+        { name: 'NKIA123123', fastened: '11' },
+        { name: 'NKIA456456', fastened: '00' },
+        { name: 'NKIA456456', fastened: '00' },
+        { name: 'NKIA456456', fastened: '00' },
+        { name: 'NKIA456456', fastened: '00' },
+    ]
+
+    // useEffect(() => {
+    //     bleManagerEmitter.addListener('BleManagerDidUpdateState', (args) => {
+    //         if (args?.state !== bluetoothState) {
+    //             setBluetoothState(args.state)
+    //         }
+    //     })
+    // }, [bluetoothState])
     return (
         <>
-            <Spinner
-                // visible={loading}
-                // textContent={'체결여부 검사중'}
-                overlayColor={'rgba(0, 0, 0, 0.7)'}
-                textStyle={{ color: 'white' }}
-            />
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <SInfoContainerView>
-                    <SInfoDetailView>
-                        <STextLabel>{i18nt('common.name')}</STextLabel>
-                        <Input
-                            containerStyle={{
-                                paddingHorizontal: 0,
-                            }}
-                            inputContainerStyle={{
-                                backgroundColor: colorSet.primaryBg,
-                                borderColor: 'transparent',
-                                paddingHorizontal: 10,
-                            }}
-                            inputStyle={{
-                                fontSize: fontSizeSet.sm,
-                                color: colorSet.normalTextColor,
-                            }}
-                            errorMessage={errorMessage}
-                            // onChangeText={onChangeName}
-                            clearButtonMode="always"
-                            rightIcon={<Icon name="pencil" size={20} />}
-                            placeholder={i18nt('common.enter-name')}
-                            disabled={connectionState}
-                            maxLength={10}
-                        />
-                    </SInfoDetailView>
-                    <SInfoDetailView>
-                        <STextLabel>{i18nt('common.date-of-birth')}</STextLabel>
-                        <Input
-                            containerStyle={{
-                                paddingHorizontal: 0,
-                            }}
-                            inputContainerStyle={{
-                                backgroundColor: colorSet.primaryBg,
-                                borderColor: 'transparent',
-                                paddingHorizontal: 10,
-                            }}
-                            inputStyle={{
-                                fontSize: fontSizeSet.sm,
-                                color: colorSet.normalTextColor,
-                            }}
-                            errorMessage={errorMessage}
-                            onChangeText={(value) => {
-                                // onChangeDate(value)
-                                // if (value.length >= 6) {
-                                //     Keyboard.dismiss()
-                                // }
-                            }}
-                            clearButtonMode="always"
-                            rightIcon={
-                                <Icon
-                                    name="pencil"
-                                    size={20}
-                                    color={colorSet.normalTextColor}
-                                />
-                            }
-                            placeholder="YY/MM/DD"
-                            disabled={connectionState}
-                            keyboardType="numeric"
-                            maxLength={7}
-                            returnKeyType="go"
-                        />
-                    </SInfoDetailView>
-                    {/*<SInfoDetailView>*/}
-                    {/*    <STextLabel>*/}
-                    {/*        {i18nt('common.connection-status')}*/}
-                    {/*    </STextLabel>*/}
-                    {/*    <SConnectStateContainerView*/}
-                    {/*        connectionState={connectionState}*/}
-                    {/*    >*/}
-                    {/*        <SConnectStateText>*/}
-                    {/*            {connectionState*/}
-                    {/*                ? i18nt('sensor.on')*/}
-                    {/*                : i18nt('sensor.off')}*/}
-                    {/*        </SConnectStateText>*/}
-                    {/*    </SConnectStateContainerView>*/}
-                    {/*</SInfoDetailView>*/}
-                    {/*<SInfoDetailView>*/}
-                    {/*    <STextLabel>{i18nt('common.fail-safe')}</STextLabel>*/}
-                    {/*    <SContractStateContainerView*/}
-                    {/*        borderColor={typeOfFastened(fastened).borderColor}*/}
-                    {/*        backgroundColor={*/}
-                    {/*            typeOfFastened(fastened).backgroundColor*/}
-                    {/*        }*/}
-                    {/*    >*/}
-                    {/*        <Icon*/}
-                    {/*            name={typeOfFastened(fastened).icon}*/}
-                    {/*            size={36}*/}
-                    {/*            color={typeOfFastened(fastened).color}*/}
-                    {/*        />*/}
-                    {/*        <SContractStateView>*/}
-                    {/*            {fastenedMessage(fastened)}*/}
-                    {/*        </SContractStateView>*/}
-                    {/*    </SContractStateContainerView>*/}
-                    {/*</SInfoDetailView>*/}
-                </SInfoContainerView>
-            </TouchableWithoutFeedback>
-
-            <SButtonGroupView>
-                <Button
-                    buttonStyle={{
-                        height: 50,
-                        fontSize: fontSizeSet.base,
-                        marginBottom: 15,
-                        backgroundColor: colorSet.primary,
-                    }}
-                    // onPress={onConnect}
-                    title={i18nt('action.connection')}
-                    // disabled={connectionState}
-                />
-                <Button
-                    type="outline"
-                    buttonStyle={{
-                        height: 50,
-                        fontSize: fontSizeSet.base,
-                        borderColor: colorSet.primary,
-                    }}
-                    titleStyle={{ color: colorSet.primary }}
-                    // onPress={onAllClear}
-                    title={i18nt('action.disconnect')}
-                    // disabled={!connectionState}
-                />
-            </SButtonGroupView>
+            <SButtongroupContainerView>
+                <ButtonGroup groupList={buttonGroupList} />
+            </SButtongroupContainerView>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                {bluetoothState === null || bluetoothState === 'off' ? (
+                    <StateBar title={i18nt('alarm.bluetooth-off')} />
+                ) : null}
+                <SSensorListContainerView>
+                    {/*<SensorList list={sensorList} />*/}
+                </SSensorListContainerView>
+                <Divider />
+            </ScrollView>
         </>
     )
 }
