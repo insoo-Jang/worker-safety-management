@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { View, FlatList, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, TouchableOpacity } from 'react-native'
 import { ListItem, Text } from 'react-native-elements'
 import {
     SSensorListTitleContainerView,
@@ -16,6 +16,24 @@ import { times } from '../../../utils/format'
 
 const SensorList = ({ list }) => {
     const [listOpen, setListOpen] = useState(false)
+    const [listState, setListState] = useState([])
+    const setListFunction = (value) => {
+        setListState(value)
+    }
+    const updateList = (target) => {
+        const newListState = listState.reduce((acc, datum) => {
+            if (datum?.name === target?.name) {
+                acc.push(Object.assign(datum, { check: true }))
+            } else {
+                acc.push(Object.assign(datum, { check: false }))
+            }
+            return acc
+        }, [])
+        setListFunction(newListState)
+    }
+    useEffect(() => {
+        setListFunction(list)
+    }, [list])
 
     const listEmptyStyle = {
         imgWidth: 60,
@@ -40,15 +58,15 @@ const SensorList = ({ list }) => {
         },
     }
     const renderItem = ({ item, index }) => {
-        // const backgroundColor =
-        //     item.time === selectedItemTime.time ? '#f9f9f9' : '#fff'
-
         return (
             <ListItem
                 topDivider
-                // onPress={() => onChangeSelectTime(item)}
+                key={index}
+                onPress={() => {
+                    updateList(item)
+                }}
                 containerStyle={{
-                    // backgroundColor: backgroundColor,
+                    backgroundColor: item.check ? '#f9f9f9' : '#fff',
                     borderColor:
                         index === 0 ? 'transparent' : colorSet.borderColor,
                     paddingHorizontal: 0,
@@ -84,16 +102,16 @@ const SensorList = ({ list }) => {
                     />
                 ) : (
                     <>
-                        <FlatList
-                            data={list.filter((x, index) => {
-                                return listOpen
-                                    ? index < list.length
-                                    : index < 3
-                            })}
-                            renderItem={renderItem}
-                            keyExtractor={(item, index) => index.toString()}
-                        />
-                        {list.length > 3 ? (
+                        {listState.map((item, index) => {
+                            if (listOpen) {
+                                return renderItem({ item, index })
+                            } else {
+                                return index < 3
+                                    ? renderItem({ item, index })
+                                    : null
+                            }
+                        })}
+                        {listState.length > 3 ? (
                             listOpen ? (
                                 <TouchableOpacity
                                     style={{
@@ -121,7 +139,9 @@ const SensorList = ({ list }) => {
                                         justifyContent: 'center',
                                         alignItems: 'center',
                                     }}
-                                    onPress={() => setListOpen(true)}
+                                    onPress={() => {
+                                        setListOpen(true)
+                                    }}
                                 >
                                     <Text
                                         style={{

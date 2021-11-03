@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+
 import { NavigationContainer, useNavigation } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -10,8 +11,10 @@ import { isEmpty } from 'lodash-es'
 import { SCREEN } from './constants'
 import { colorSet } from '../styles/colors'
 import { LoginTab, MainTab, MoreTab, MyInfoTab } from '../screens/tabs'
+import QRComponent from '../screens/pages/qr/QRComponent'
+import { NFCComponent } from '../screens/pages/nfc'
 
-const BottomTabStack = createMaterialTopTabNavigator()
+const BottomTabStack = createBottomTabNavigator()
 const MainStack = createStackNavigator()
 const RootStack = createStackNavigator()
 
@@ -114,6 +117,33 @@ const MainNavigation = () => {
         </MainStack.Navigator>
     )
 }
+const BottomTabNavigation = () => {
+    return (
+        <BottomTabStack.Navigator>
+            <BottomTabStack.Screen
+                name={SCREEN.QR}
+                component={QRComponent}
+                options={{
+                    animationEnabled: false,
+                    headerShown: false,
+                    tabBarLabelStyle: { fontSize: 11 },
+                    tabBarIcon: () => <Icon name="qrcode-scan" size={20} />,
+                }}
+            />
+            <BottomTabStack.Screen
+                name={SCREEN.NFC}
+                component={NFCComponent}
+                options={{
+                    animationEnabled: false,
+                    headerShown: false,
+                    tabBarLabelStyle: { fontSize: 11 },
+                    tabBarIcon: () => <Icon name="cellphone-nfc" size={20} />,
+                }}
+            />
+        </BottomTabStack.Navigator>
+    )
+}
+
 const RootNavigation = () => {
     return (
         <RootStack.Navigator mode="modal">
@@ -144,15 +174,43 @@ const RootNavigation = () => {
                     },
                 }}
             />
-            {/*<RootStack.Screen*/}
-            {/*    name={SCREEN.QR}*/}
-            {/*    component={QrScanner}*/}
-            {/*    options={{*/}
-            {/*        animationEnabled: false,*/}
-            {/*        headerTintColor: colorSet.normalTextColor,*/}
-            {/*        headerBackTitleVisible: false,*/}
-            {/*    }}*/}
-            {/*/>*/}
+            <RootStack.Screen
+                name={SCREEN.Scan}
+                component={BottomTabNavigation}
+                options={(route) => {
+                    return {
+                        animationEnabled: false,
+                        headerBackTitleVisible: false,
+                        headerTitleAlign: 'center',
+                        headerLeft: null,
+                        headerRight: () => (
+                            <TouchableOpacity
+                                onPress={() => route.navigation.goBack()}
+                                style={{ marginHorizontal: 15 }}
+                                hitSlop={{
+                                    top: 10,
+                                    right: 15,
+                                    bottom: 10,
+                                    left: 15,
+                                }}
+                            >
+                                <Icon
+                                    name="close"
+                                    size={20}
+                                    style={{ marginHorizontal: 15 }}
+                                />
+                            </TouchableOpacity>
+                        ),
+                        headerStyle: {
+                            shadowColor: 'transparent',
+                            shadowOpacity: 0,
+                            elevation: 0,
+                            borderBottomWidth: 1,
+                            borderBottomColor: colorSet.borderColor,
+                        },
+                    }
+                }}
+            />
         </RootStack.Navigator>
     )
 }

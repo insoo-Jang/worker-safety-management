@@ -1,13 +1,7 @@
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { responsiveWidth } from 'react-native-responsive-dimensions'
-import {
-    SButtongroupView,
-    SIconView,
-    SSubTitleText,
-    STextView,
-    STitleText,
-} from './ButtonGroupStyle'
+import { SButtongroupView, STextView, STitleText } from './ButtonGroupStyle'
 import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { colorSet } from '../styles/colors'
@@ -15,7 +9,7 @@ import { colorSet } from '../styles/colors'
 const wrapperWidth = responsiveWidth(100) - 40
 
 const ButtonGroup = (props) => {
-    const { groupList = {}, resource = {} } = props
+    const { groupList = {} } = props
     const navigation = useNavigation()
     const buttonNum = groupList?.length
 
@@ -32,15 +26,18 @@ const ButtonGroup = (props) => {
                             // paddingVertical: 7,
                         }}
                         key={index}
+                        onPress={() => {
+                            if (data?.route) {
+                                navigation.navigate(data?.route)
+                            }
+                        }}
                     >
-                        {/*<SIconView>*/}
                         <Icon
                             name={data?.icon}
                             size={27}
                             style={{ marginBottom: 3 }}
                             color="white"
                         />
-                        {/*</SIconView>*/}
                         <STextView>
                             <STitleText>{data?.title}</STitleText>
                         </STextView>

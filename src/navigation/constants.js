@@ -5,6 +5,8 @@ export const SCREEN = {
     LoginTab: 'LoginTab',
     MoreTab: i18nt('title.more'),
     QR: i18nt('title.qr'),
+    NFC: i18nt('title.nfc'),
+    Scan: i18nt('title.scan'),
     Main: i18nt('title.main'),
     MyInfoTab: i18nt('title.my-info'),
 }

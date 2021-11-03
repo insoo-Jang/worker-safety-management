@@ -56,7 +56,8 @@
         "sensor-error-408" : "센서 연결 시간초과"
     },
     "title": {
-        "qr": "센서 QR 인식",
+        "qr": "QR/바코드",
+        "nfc": "NFC",
         "main": "작업자 안전관리",
         "description" : "달비계 추락방지 센서 통신중...",
         "barometer": "기압계",
@@ -67,7 +68,8 @@
         "my-info": "내정보",
         "name" : "이름",
         "phone" : "전화번호",
-        "date-of-birth" : "생년월일"
+        "date-of-birth" : "생년월일",
+        "scan" : "스캔하기"
     },
     "login": {
         "header": "작업자 입력",

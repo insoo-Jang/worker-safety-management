@@ -56,7 +56,8 @@
         "sensor-error-408" : "Connection timeout"
     },
     "title": {
-        "qr": "QR Code Scan",
+        "qr": "QR/BarCode",
+        "nfc": "NFC",
         "main": "Worker safety management",
         "description" :"Communication with Hanging-scaffolding sensor...",
         "barometer" :"Barometer",
@@ -67,7 +68,8 @@
         "my-info": "My Info",
         "name" : "Name",
         "phone" : "PhoneNumber",
-        "date-of-birth" : "Date of birth"
+        "date-of-birth" : "Date of birth",
+        "scan" : "Scan"
     },
     "login": {
         "header": "Worker Input",

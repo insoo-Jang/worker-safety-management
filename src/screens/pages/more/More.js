@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { ScrollView, TouchableOpacity } from 'react-native'
 import { SMoreHeaderView, SUserTitleText } from './MoreStyle'
-import { Button, ListItem, Text } from 'react-native-elements'
+import { ListItem, Text } from 'react-native-elements'
 import { View } from 'react-native'
 import { colorSet } from '../../../styles/colors'
 import { i18nt } from '../../../utils/i18n'
@@ -12,7 +12,9 @@ import Constants from 'expo-constants'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const More = (props) => {
+const More = () => {
+    const [userData, setUserData] = useState({})
+
     const navigation = useNavigation()
     const items = [
         {
@@ -38,14 +40,25 @@ const More = (props) => {
                 ],
             })
         } catch (e) {
-            console.log('[ERROR]: More.js > Logout()')
+            console.log('[ERROR]: More.js > Logout()', e)
         }
     }
-
+    const getData = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('@userData')
+            const response = jsonValue !== {} ? JSON.parse(jsonValue) : {}
+            setUserData(response)
+        } catch (e) {
+            console.log('[ERROR]: MyInfo.js > getData()')
+        }
+    }
+    useLayoutEffect(() => {
+        getData()
+    }, [])
     return (
         <ScrollView>
             <SMoreHeaderView>
-                <SUserTitleText>작업자이름</SUserTitleText>
+                <SUserTitleText>{userData?.name}</SUserTitleText>
                 <TouchableOpacity
                     onPress={() => Logout()}
                     style={{
@@ -68,7 +81,11 @@ const More = (props) => {
                 {items.map((item, index) => (
                     <ListItem
                         key={index}
-                        onPress={() => navigation.navigate(item.screen)}
+                        onPress={() => {
+                            if (item.screen) {
+                                navigation.navigate(item.screen)
+                            }
+                        }}
                     >
                         <Icon name={item.icon} size={20} />
                         <ListItem.Content>
