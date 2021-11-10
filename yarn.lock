@@ -1772,13 +1772,12 @@
     "@babel/runtime" "^7.7.2"
     regenerator-runtime "^0.13.3"
 
-"@koale/useworker@^3.2.1":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@koale/useworker/-/useworker-3.4.0.tgz#773ac623212bfaed377ff5e6cd44240ed52e40ff"
-  integrity sha512-cDGItsqyNd6SlaO+9XmDupANNNl4omjisdLcLbITdcKktlK+wpW1HwbnVjHiXBtHXQsKxxE832qVMlE/q9lmXg==
+"@koale/useworker@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@koale/useworker/-/useworker-4.0.2.tgz#cb540a2581cd6025307c3ca6685bc60748773e58"
+  integrity sha512-xPIPADtom8/3/4FLNj7MvNcBM/Z2FleH85Fdx2O869eoKW8+PoEgtSVvoxWjCWMA46Sm9A5/R1TyzNGc+yM0wg==
   dependencies:
     dequal "^1.0.0"
-    isoworker "^0.1.1"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -3618,15 +3617,15 @@ expo-barcode-scanner@~11.1.2:
     expo-image-loader "~3.0.0"
     expo-modules-core "~0.4.4"
 
-expo-camera@~11.0.2:
-  version "11.0.3"
-  resolved "https://registry.yarnpkg.com/expo-camera/-/expo-camera-11.0.3.tgz#36b3e8b82f9f7944a9518042df276dfb9c769887"
-  integrity sha512-LDVW76spXtSuq4qb0y7+4zhNQUCZAHV+bxiiXgyFzNf1Tb9I1qqwdUyOZj4951xhOUxdH2AzNMhzWQMSthY/mg==
+expo-camera@~12.0.3:
+  version "12.0.3"
+  resolved "https://registry.yarnpkg.com/expo-camera/-/expo-camera-12.0.3.tgz#9afc38c12b973f385d38c7393627f0e2eb3d49a9"
+  integrity sha512-0u0e7ia3+GrJtmpxDQxQ8kp2hSw3eTN0Qt2+w9d6GxLsGaEZY+1/wFp906KGbRXmvJqg6YsjIv/pDoV+BQpwgg==
   dependencies:
-    "@expo/config-plugins" "^1.0.18"
-    "@koale/useworker" "^3.2.1"
+    "@expo/config-plugins" "^4.0.2"
+    "@koale/useworker" "^4.0.2"
+    expo-modules-core "~0.4.4"
     invariant "2.2.4"
-    unimodules-permissions-interface "^6.2.0"
 
 expo-constants@~10.1.3:
   version "10.1.3"
@@ -4637,11 +4636,6 @@ isomorphic-fetch@^2.1.1:
   dependencies:
     node-fetch "^1.0.1"
     whatwg-fetch ">=0.10.0"
-
-isoworker@^0.1.1:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/isoworker/-/isoworker-0.1.3.tgz#a54587fa1da2f57d401565f83b1c4ee8b21ae372"
-  integrity sha512-NmguMXzoa/ixeQv373vIf+zYgqvZMqEFpMSysAQWfdNAf+TvjZQH7ZiQEk9ZKHkktfPqH74GSab4IVXda71hbw==
 
 jest-get-type@^26.3.0:
   version "26.3.0"
@@ -7426,11 +7420,6 @@ unimodules-image-loader-interface@~6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/unimodules-image-loader-interface/-/unimodules-image-loader-interface-6.1.0.tgz#f48509c9900299798dff73635d1544d5829e10c1"
   integrity sha512-o8hZI6J6DGYyo2xSH6J+ipxME0blNfmaWU3P2Y2AUVxbEPdgjT2sVmufRWMKGhrt7gaNW4xF/JUbF9lq4Rui7w==
-
-unimodules-permissions-interface@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/unimodules-permissions-interface/-/unimodules-permissions-interface-6.2.0.tgz#6cf17d173762c9da67e38d60ffde5c4d3c858fa8"
-  integrity sha512-9qP/LTsE5eTlqS//wFXenq3Cj6d5fvOkBZrmky8fiPQkO0tsygOg1n1muMdw+3H4QezSyY6Zd06yWf2JQwyo/w==
 
 unimodules-permissions-interface@~6.1.0:
   version "6.1.0"

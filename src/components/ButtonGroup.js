@@ -29,6 +29,8 @@ const ButtonGroup = (props) => {
                         onPress={() => {
                             if (data?.route) {
                                 navigation.navigate(data?.route)
+                            } else if (data?.event) {
+                                data.event()
                             }
                         }}
                     >

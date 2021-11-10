@@ -1,28 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import { NativeModules, ScrollView } from 'react-native'
-import { SButtongroupContainerView } from '../../../components/ButtonGroupStyle'
+import NativeEventEmitter from 'react-native/Libraries/EventEmitter/NativeEventEmitter'
+import { Camera } from 'expo-camera'
+import { useNavigation } from '@react-navigation/native'
+
 import ButtonGroup from '../../../components/ButtonGroup'
 import { i18nt } from '../../../utils/i18n'
 import StateBar from '../../../components/StateBar'
-import NativeEventEmitter from 'react-native/Libraries/EventEmitter/NativeEventEmitter'
+import { SButtongroupContainerView } from '../../../components/ButtonGroupStyle'
 import { SSensorListContainerView } from './MainStyle'
 import SensorList from './SensorList'
 import { Divider } from 'react-native-elements'
 import BleManager from 'react-native-ble-manager'
 import { permissionsAndroid } from '../../../utils/permissions'
 import { SCREEN } from '../../../navigation/constants'
+import { WarnAlert } from '../../../components/Alerts'
 
 const BleManagerModule = NativeModules.BleManager
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule)
 
 const Main = () => {
     const [bluetoothState, setBluetoothState] = useState(null)
+    const navigation = useNavigation()
 
     const buttonGroupList = [
         {
             title: i18nt('action.connection'),
             icon: 'access-point',
-            route: SCREEN.Scan,
+            event: () => {
+                getCameraPermission()
+            },
+            // route: SCREEN.Scan,
         },
         { title: i18nt('action.disconnect'), icon: 'cancel' },
     ]
@@ -34,6 +42,18 @@ const Main = () => {
         { name: 'NKIA009909', fastened: '00' },
         { name: 'NKIA121212', fastened: '00' },
     ]
+    const getCameraPermission = async () => {
+        const { status } = await Camera.requestCameraPermissionsAsync()
+        if (status === 'granted') {
+            navigation.navigate(SCREEN.Scan)
+        } else {
+            WarnAlert({
+                message: i18nt('error.permission-deny-camera'),
+                error: 'Camera Auth',
+                // state: setConnectionState,
+            })
+        }
+    }
     useEffect(() => {
         BleManager.start({ showAlert: false })
 
